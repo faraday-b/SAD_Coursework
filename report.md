@@ -24,7 +24,7 @@ The project tasks were organized using the following workflow:
 
 ### Board Link
 
-[View Kanban Board](https://github.com/username/repository/projects/1)
+[View Kanban Board](https://github.com/users/faraday-b/projects/3)
 
 ## Task Distribution
 
