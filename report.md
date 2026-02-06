@@ -2,10 +2,10 @@
 
 ## Group Members
 
-- **Member 1**: [GitHub Profile](https://github.com/faraday-b)
-- **Member 2**: [GitHub Profile](https://github.com/JM-Vincent)
-- **Member 3**: [GitHub Profile](https://github.com/OwenT2424)
-- **Member 4**: [GitHub Profile](link)
+- **Benedict**: [GitHub Profile](https://github.com/faraday-b)
+- **Ashlin**: [GitHub Profile](https://github.com/JM-Vincent)
+- **Owen**: [GitHub Profile](https://github.com/OwenT2424)
+- **Aaron**: [GitHub Profile](https://github.com/ackoma)
 
 ## Project Overview
 
