@@ -1,4 +1,4 @@
-# Lab Assignment Report
+# Report
 
 ## Group Members
 
