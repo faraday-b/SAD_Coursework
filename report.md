@@ -17,9 +17,10 @@ Kanban board and collaborated via GitHub.
 
 The project tasks were organized using the following workflow:
 
-- **To Do**: Tasks to be completed.
+- **Backlog**: Tasks to be completed.
+- **Ready**: Task is ready to be picked up.
 - **In Progress**: Tasks currently being worked on.
-- **Review**: Tasks awaiting review.
+- **In Review**: Tasks awaiting review.
 - **Done**: Completed tasks.
 
 ### Board Link
