@@ -39,8 +39,6 @@ The project tasks were organized using the following workflow:
 
 - **Code Implementation**: [View
   Code](https://github.com/username/repository/blob/main/code.py)
-- **Report**: [View
-  Report](https://github.com/username/repository/blob/main/report.md)
 
 ## Conclusion
 
