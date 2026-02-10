@@ -9,9 +9,7 @@
 
 ## Project Overview
 
-This repository contains the work for the Lab Assignment. We managed tasks
-using a
-Kanban board and collaborated via GitHub.
+This repository contains the work for the coursework. We managed tasks using a Kanban board and collaborated via GitHub.
 
 ## Kanban Board
 
