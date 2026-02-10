@@ -1,8 +1,7 @@
 # Group Meetings
 
-| Time Slot                     | Monday | Tuesday | Wednesday | Thursday | Friday |
-| :---------------------------- | :----- | :------ | :-------- | :------- | :----- |
-| **Morning** (12:00 - 13:00)   |        | ✅      |           |          |        |
-| **Lunch** (12:00 - 13:00)     |        |         |           |          |        |
-| **Afternoon** (13:00 - 17:00) |        |         |           |          |        |
-| **Evening** (17:00 - 20:00)   |        |         |           |          |        |
+| Date       | Attendees | Summary |
+| ---------- | --------- | ------- |
+| 10/02/2026 | Everyone  |  We allocated tasks to each member of the group and created the project scope statement.       |
+|            |           |         |
+|            |           |         |
