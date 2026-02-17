@@ -15,5 +15,4 @@ This repository contains the work for the coursework. We managed tasks using a K
 
 [View Kanban Board](https://github.com/users/faraday-b/projects/3)
 
-- **Code Implementation**: [View
-  Code](https://github.com/faraday-b/SAD_Coursework/tree/main/share-price-app)
+[View Code](https://github.com/faraday-b/SAD_Coursework/tree/main/share-price-app)
