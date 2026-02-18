@@ -1,246 +1,253 @@
-# Requirements Identification #
+# Requirements Identification
 
-**Project:** Share Price Comparison Web Application 
+**Project:** Share Price Comparison Web Application
 
-This section identifies and defines the requirements and scope for the Share Price Comparison Web Application. The purpose of this system is to allow users to retrieve, store, and compare historical share price data over time using a robust and scalable Java-based architecture. 
+This section defines and scopes the functional and non-functional requirements for the Share Price Comparison Web Application. The purpose of the system is to allow users to retrieve, persist, visualise, and compare historical share price data over a selected time period. The application will be implemented using a scalable, layered Java-based architecture to support maintainability, reliability, and future extension.
 
-# 1.	Functional Requirements
+________________________________________
+# 1. Functional Requirements
 
-**Share symbol:** This part of the system is about letting users type in the stock symbols they want to look up
+**Share Symbol Input and Validation**
 
+**Description**
 
-•	Allow the user to enter one or more stock symbols.
+The system shall allow users to enter one or more stock symbols representing publicly traded companies.
 
-•	Make sure the symbols are real and supported (so the system doesn’t waste time looking up something that doesn’t exist).
+**Requirements:**
 
-**Why these matters**
+•	Allow users to input one or more stock symbols.
 
-•	The whole application depends on these symbols. If the user enters something invalid, nothing else will work properly.
+•	Validate entered symbols against supported markets or data provider listings.
 
-•	Checking the symbols early prevents errors and avoids unnecessary calls to external services.
+•	Reject invalid or unsupported symbols with appropriate user feedback.
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Rationale:**
 
-**Date Range Selection:** This requirement is about letting users choose the time for the stock price data they want to see.
+Share symbols are the foundation of all data retrieval operations. Early validation prevents unnecessary external API calls, reduces error propagation through the system, and improves user experience by providing immediate feedback.
 
+**Scope Considerations:**
 
-•	Allow users to pick a start date and an end date.
+Validation is limited to checking symbol existence and format; the system does not manage company metadata beyond symbol identification.
+________________________________________
+**Date Range Selection**
 
-•	Only let them choose a range of up to two years.
+**Description:**
 
-**Why these matters**
+The system shall allow users to define the time period for which historical share price data is retrieved.
 
-•	Many free financial data services only allow requests for a limited time range. Keeping it under two years avoids errors or blocked requests.
+**Requirements:**
 
-•	 Smaller date ranges help the system run faster and more reliably.
+•	Allow users to select a start date and end date.
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+•	Enforce a maximum date range of two years.
 
-**Retrieval of Historical Share Price Data:** This requirement is about how the system gets past stock prices for the symbols the user enters.
+**Rationale:**
+Many free financial data providers restrict historical data access to limited time windows. Enforcing a two-year maximum avoids request failures and ensures consistent system behaviour while improving performance by limiting dataset size.
 
+**Scope Considerations:**
 
-•	Fetch daily historical stock prices from an external service (for example, Yahoo Finance).
+The system supports daily historical data only; Throughout the day or real-time data is outside the scope of this project.
 
-•	Use a separate “data provider interface” so the system isn’t tied to just one source.
+________________________________________
+**Retrieval of Historical Share Price Data:**
 
-**Why these matters**
+**Description:**
 
-•	External data services can change, break, or become unavailable at any time.
+The system shall retrieve historical share price data from external financial data providers.
 
-•	This makes the system more flexible, easier to maintain, and more reliable.
+**Requirements:**
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+•	Fetch daily historical share price data for validated symbols.
 
-**Graphical Data Visualisation:** This requirement is about showing the stock price data in a way that’s easy for users to understand immediately.
+•	Use a data provider abstraction layer to decouple the system from specific external APIs.
 
+•	Support replacement or extension of data sources without impacting core logic.
 
-•	Display the historical stock prices on a line chart.
+**Rationale:**
 
-•	Show how the price changes over time so users can easily spot trends and patterns.
+External APIs may change, impose rate limits, or become unavailable. Abstracting data retrieval improves maintainability, supports scalability, and reduces long-term technical risk.
 
-**Why these matters**
-•	Graphs make the information much easier to understand than raw numbers.
+**Scope Considerations:**
 
-•	Users can quickly see whether a stock is rising, falling, or staying steady.
+Only read-only access to external data is required; the system does not publish or modify financial data.
 
+________________________________________
 
+**Graphical Data Visualisation**
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Description:**
 
+The system shall present historical share price data in a visual format to aid interpretation.
 
+**Requirements:**
 
+•	Display share prices using line charts.
 
-**Share Price Comparison:** This requirement is about letting users compare several stocks on one chart so they can easily see how each one performs over the same period.
+•	Plot price values against time to clearly show trends and fluctuations.
 
-•	Allow multiple shares to be displayed together on a single chart.
+**Rationale:**
 
-•	Align all share price data to the same date range so the comparison is accurate.
+Visualisation enables users to quickly understand price behaviour over time. Graphs are significantly more intuitive than raw numerical tables when identifying trends and patterns.
 
-•	Process and synchronise data in the service layer to ensure each stock lines up correctly.
+**Scope Considerations:**
 
-**Why these matters**
+Advanced analytics (e.g. indicators, forecasting) are not included.
 
-•	Users can quickly understand differences in performance when shares are shown side by side. by side.
+________________________________________
 
-•	Aligning data avoids misleading comparisons and ensures the chart reflects real trends.
+**Share Price Comparison**
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Description:**
+The system shall allow users to compare multiple shares over the same time period.
 
-**Persistent Data Storage:** This requirement is about keeping all retrieved share price data saved on the local system so the application can run efficiently and reliably, even without an internet connection.
+**Requirements:**
 
-•	Store all fetched share price data in a persistent format, such as a relational database or structured files like JSON.
+•	Display multiple shares on a single chart.
 
-•	Makes sure the stored data can be reused without repeatedly calling external APIs.
+•	Align all datasets to a common date range.
 
-•	Organise the data layer so it can efficiently read, write, and update stored records.
+•	Synchronise missing or non-trading days at the service layer.
 
-**Why these matters**
+**Rationale:**
 
-•	Reduces dependency on external data sources, improving performance and reliability.
+Side-by-side comparison allows users to easily assess relative performance. Proper alignment ensures comparisons are accurate and not misleading due to mismatched data points.
 
-•	Enables offline access, allowing users to view previously retrieved data at any time.
+**Scope Considerations:**
 
-•	Influences how the data layer is designed, since it must support long term storage and efficient retrieval. term storage and efficient retrieval.
+Comparison focuses on price trends only; volume or market capitalisation comparisons are excluded.
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+________________________________________
+**Persistent Data Storage**
 
-**Offline Functionality:** This requirement is about ensuring the system can still operate in a limited but useful way when there is no internet connection, by relying on data that has already been stored locally.
+**Description:**
 
-•	Load previously saved share price data when the system cannot reach external APIs.
+The system shall persist retrieved share price data locally.
 
-•	Provide essential features—such as viewing past stock information—even without network access.
+**Requirements:**
 
-•	Integrate closely with the persistence mechanism so offline mode works smoothly.
+•	Store historical data using a persistent mechanism such as a relational database or structured files (e.g. JSON).
 
-**Why these matters**
+•	Reuse stored data to minimise repeated API calls.
 
-•	Improves reliability for users in areas with unstable or intermittent connectivity.
+•	Support efficient read, write, and update operations.
 
-•	Ensures the application remains usable even when online services are unavailable.
+**Rationale:**
+Persistent storage improves performance, reduces dependency on external services, and enables offline access. This requirement directly influences the design of the data access layer.
 
-•	Reinforces the need for persistent storage early in the system’s architecture.
+**Scope Considerations:**
 
+The system stores historical price data only; user account management is out of scope.
+________________________________________
+**Offline Functionality**
 
+**Description:**
+The system shall provide limited functionality when no internet connection is available.
 
+**Requirements:**
 
+•	Load previously stored share price data when external APIs are unreachable.
 
+•	Allow users to view historical charts and comparisons using cached data.
 
+**Rationale:**
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Offline functionality increases system reliability and usability in environments with unstable connectivity. It reinforces the importance of persistent storage in the overall architecture.
 
+**Scope Considerations:**
 
+Offline mode does not support retrieval of new data.
 
+________________________________________
+# 2. Non-Functional Requirements
 
+**Maintainability**
 
+**Requirements:**
 
+•	Use a layered architecture with clear separation of concerns.
 
-# 2.	Non-Functional Requirements
+•	Define stable interfaces between components.
 
-**Maintainability:** This requirement is about ensuring the system can be easily updated, fixed, and expanded as the project grows over multiple sprints.
+•	Ensure components can be modified independently.
 
-•	Use a clear layered architecture with well-defined responsibilities. defined responsibilities.
+**Justification**
 
-•	Separate concerns so each component handles a specific part of the system.
+Maintainability supports long-term development across multiple sprints and reduces the cost of future changes.
+________________________________________
 
-•	Provide clean, stable interfaces that make future changes easier to implement.
+**Scalability**
 
-**Why these matters**
+**Requirements:**
 
-•	Reduces the effort needed to add new features or modify existing ones.
+•	Allow integration of additional data providers.
 
-•	Helps the team maintain code quality as the system evolves.
+•	Support alternative storage mechanisms without redesign.
 
-•	Supports long term development across multiple sprints. term development across multiple sprints.
+•	Enable system growth with minimal architectural changes.
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Scalability:** This requirement ensures the system can grow without major redesigns, supporting new features, data sources, or storage options.
+**Justification**
 
-•	Allow new components to be added with minimal impact on existing ones.
+Scalability ensures the system remains adaptable and future-proof.
 
-•	Support flexible integration of additional data sources or storage mechanisms.
+________________________________________
 
-•	Use an architecture that can expand as the system’s scope increases.
+**Reliability**
 
-**Why these matters**
+**Requirements:**
 
-•	Makes the system future proof and adaptable to new requirements.
+•	Handle external API failures gracefully.
 
-•	Encourages reuse of existing components instead of rebuilding functionality.
+•	Use cached or stored data as fallback.
 
-•	Reduces technical debt as the project grows.
+•	Maintain core functionality during partial system failures.
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Justification**
 
-**Reliability:** This requirement focuses on keeping the system usable even when external services fail or behave unpredictably.
+Reliability increases user trust and prevents complete service disruption.
 
-•	Handle API failures gracefully without crashing or blocking the user.
+________________________________________
 
-•	Use cached or stored data when live data cannot be retrieved.
+**Performance**
 
-•	Provide fallback behaviour that maintains core functionality.
+**Requirements:**
 
-**Why these matters**
+•	Minimise unnecessary API calls.
 
-•	Prevents complete service failure when external APIs are unavailable.
+•	Efficiently process and load historical datasets.
 
-•	Ensures users can still access essential information.
+•	Leverage local caching to reduce latency.
 
-•	Improves overall system stability and trustworthiness.
+**Justification**
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Good performance improves user experience and reduces external service load.
 
-**Performance:** This requirement ensures the system responds quickly and avoids unnecessary delays, especially when processing historical data.
+________________________________________
 
-•	Minimise repeated or unnecessary API calls.
+**Usability**
 
-•	Process and load historical data efficiently.
+**Requirements:**
 
-•	Use local caching and persistent storage to reduce latency.
+•	Provide intuitive input controls.
 
-**Why these matters**
+•	Display clear, readable charts.
 
-•	Improves responsiveness and overall user experience.
+•	Guide users through key tasks naturally.
 
-•	Reduces load on external services.
+**Justification**
 
-•	Ensures the system performs well even with large datasets.
+High usability ensures accessibility for users with varying technical skills.
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+________________________________________
 
-
-**Usability:** This requirement ensures the system is simple and intuitive for users, even those with limited technical experience.
-
-•	Provide clear and straightforward input controls.
-
-•	Display readable, easy to interpret charts and comparisons. to interpret charts and comparisons.
-
-•	Offer an interface that guides users naturally through key tasks.
-
-**Why these matters**
-
-•	Makes the system accessible to a wider range of users.
-
-•	Helps users retrieve and compare share prices without confusion.
-
-•	Enhances overall satisfaction and ease of use.
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Constraints, Risks, and Mitigation
 
-The project is limited by academic deadlines, a short development timeframe, and dependence on third party financial data providers. There is a risk that external APIs may become unavailable or impose rate limits. This is mitigated through data abstraction and the use of local persistent storage. All requirements have been shaped with these constraints in mind. party financial data providers. There is a risk that external APIs may become unavailable or impose rate limits. This is mitigated through data abstraction and the use of local persistent storage. All requirements have been shaped with these constraints in mind.
+The project is constrained by academic deadlines, limited development time, and reliance on third-party financial data providers. External APIs may impose rate limits or become unavailable. These risks are mitigated through data abstraction, persistent local storage, and offline functionality. All requirements have been defined with these constraints in mind.
+________________________________________
 
 # Alignment with Project Goals
 
-All requirements directly support the aim of building a robust, scalable, and user-friendly share price comparison application using Java and solid architectural practices. The investigation ensures that each requirement is realistic, achievable, and well supported by the proposed system design friendly share price comparison application using Java and solid architectural practices. The investigation ensures that each requirement is realistic, achievable, and well supported by the proposed system design. friendly share price comparison application using Java and solid architectural practices. The investigation ensures that each requirement is realistic, achievable, and well supported by the proposed system design.
-
-
-
-
-
-
-
-
+All identified requirements directly support the project goal of delivering a robust, scalable, and user-friendly share price comparison application using Java and sound architectural principles. Each requirement has been carefully investigated to ensure it is realistic, achievable, and aligned with the overall system design.
 
 
 
