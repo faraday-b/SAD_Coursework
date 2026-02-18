@@ -12,6 +12,7 @@
 This repository contains the work for the coursework. We managed tasks using a Kanban board and collaborated via GitHub.
 
 ## Links
+[View Meetings](https://github.com/faraday-b/SAD_Coursework/blob/main/meetings.md)
 
 [View Kanban Board](https://github.com/users/faraday-b/projects/3)
 
