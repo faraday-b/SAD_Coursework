@@ -242,12 +242,13 @@ ________________________________________
 
 # Constraints, Risks, and Mitigation
 
-The project is constrained by academic deadlines, limited development time, and reliance on third-party financial data providers. External APIs may impose rate limits or become unavailable. These risks are mitigated through data abstraction, persistent local storage, and offline functionality. All requirements have been defined with these constraints in mind.
+The project is limited by academic deadlines, a short development timeframe, and dependence on third party financial data providers. There is a risk that external APIs may become unavailable or impose rate limits. This is mitigated through data abstraction and the use of local persistent storage. All requirements have been shaped with these constraints in mind. party financial data providers. There is a risk that external APIs may become unavailable or impose rate limits. This is mitigated through data abstraction and the use of local persistent storage. All requirements have been shaped with these constraints in mind.
+
 ________________________________________
 
 # Alignment with Project Goals
 
-All identified requirements directly support the project goal of delivering a robust, scalable, and user-friendly share price comparison application using Java and sound architectural principles. Each requirement has been carefully investigated to ensure it is realistic, achievable, and aligned with the overall system design.
+All requirements directly support the aim of building a robust, scalable, and user-friendly share price comparison application using Java and solid architectural practices. The investigation ensures that each requirement is realistic, achievable, and well supported by the proposed system design friendly share price comparison application using Java and solid architectural practices. The investigation ensures that each requirement is realistic, achievable, and well supported by the proposed system design. friendly share price comparison application using Java and solid architectural practices. The investigation ensures that each requirement is realistic, achievable, and well supported by the proposed system design.
 
 
 
