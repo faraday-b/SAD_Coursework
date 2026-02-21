@@ -16,7 +16,7 @@ No code shall be pushed directly to the main branch; correct feature branches mu
 
 Team members must commit code regularly to show collective contribution and coordination.
 
-All code must be clean, organized and effectively commented.
+All code must be clean, organized, and effectively commented.
 
 Ensure the application builds without errors in IntelliJ before pushing to the shared repository.
 
@@ -38,10 +38,23 @@ Members must arrive on time to avoid the grade being capped at 40%.
 
 ## 5. Conflict Resolution
 
-Constructive Feedback: Peer reviews and feedback must be handled professionally and non-personally.
+**Constructive Feedback:** Peer reviews and feedback must be handled professionally and non-personally.
 
-Disagreement: If the team cannot reach a consensus, a majority vote will be taken, or the module tutor will be consulted for mediation.
+**Disagreement:** If the team cannot reach a consensus, a majority vote will be taken, or the module tutor will be consulted for mediation.
+
+**Consequences of Non-Compliance:**
+To maintain project integrity and fairness, the following steps will be taken if a member fails to adhere to this Code of Conduct:
+
+- **First Instance:** A formal internal warning will be issued during a scrum meeting to discuss ways to support the member in meeting their obligations.
+- **Second Instance:** A written record of the breach will be documented in the meeting minutes. The member may be required to complete an additional peer-review task to demonstrate commitment.
+- **Third Instance:** The matter will be formally escalated to the module tutor. This may result in a request for an individual contribution audit, which could lead to a grade reduction or a cap on the individual's marks for the current sprint.
 
 ## Agreement
 
-By contributing to the GitHub repository, all team members acknowledge they have read, understood, and agreed to this Code of Conduct.
+| **Full Name** | **Student ID** | **Date Signed** | **Signature**      |
+| ------------- | -------------- | --------------- | ------------------ |
+| Aaron         |                | 21/02/2026      | _Signed Digitally_ |
+| Ashlin        |                | 21/02/2026      | _Signed Digitally_ |
+| Benedict      | FAR23591789    | 21/02/2026      | _Signed Digitally_ |
+| Owen          |                | 21/02/2026      | _Signed Digitally_ |
+
