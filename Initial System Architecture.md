@@ -13,3 +13,6 @@ The Share Price Comparison Web Application is designed using a clear, layered st
 
 
 <img width="707" height="713" alt="image" src="https://github.com/user-attachments/assets/17c35618-4e2a-4f47-b01c-1ec2fe6b0431" />
+
+
+The system is built in layers so each part has a clear job and is easier to manage. The user interacts with the app through a web browser, which sends requests to the StockController. The controller acts like a coordinator: it decides what needs to happen and passes tasks to different services, such as getting stock data, comparing prices, or preparing charts. The StockRepository is responsible for saving and loading stock prices from a local SQLite database. If the information isn’t already stored, the system uses the YahooFinanceService to fetch the latest share prices from the Yahoo Finance API.
