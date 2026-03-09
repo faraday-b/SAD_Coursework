@@ -5,3 +5,11 @@ The Share Price Comparison Web Application is designed using a clear, layered st
 - Retrieve share price data from an external provider such as Yahoo Finance
 - Store share price data locally using a database such as SQLite
 - Provide chart visualisation through a client-side charting library such as Chart.js
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# System Architecture Diagram
+
+
+
+<img width="707" height="713" alt="image" src="https://github.com/user-attachments/assets/17c35618-4e2a-4f47-b01c-1ec2fe6b0431" />
