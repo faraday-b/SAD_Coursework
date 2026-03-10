@@ -101,3 +101,125 @@ Convert the raw data into a format the app can use
 
 **Example external source**:  
 Yahoo Finance
+
+------------------------------------------------------------------------------------------------------------------
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e772164a-069a-4f2c-a967-373ea70af999" />
+
+
+# What Are Interfaces?
+Interfaces is a agreements or contracts between parts of the system.
+
+**They say**:
+
+“If you want to use me, here’s exactly what I can do.”
+
+This makes the system flexible, organised, and easy to change later.
+
+**Examples of interfaces**:
+
+IStockService
+
+IComparisonService
+
+IStockRepository
+
+IExternalStockAPI
+
+------------------------------------------------------------------------------------------------------------------
+
+# Components That Implement One Interface
+
+These components have one clear job, so they only need to follow one contract.
+
+<img width="622" height="160" alt="image" src="https://github.com/user-attachments/assets/6e9582ad-0d1f-4505-a629-7be67e129bc8" />
+
+They follow the Single Responsibility Principle, each one does one thing well.
+
+**This makes them**:
+
+- easier to understand
+
+- easier to test
+
+- easier to update
+
+------------------------------------------------------------------------------------------------------------------
+
+# Components That Implement Multiple Interfaces
+Some components need to coordinate several tasks, so they implement more than one interface.
+
+**Example**:
+StockService
+
+**Implements**:
+
+- IStockService
+
+- IStockDataProvider
+
+**Why?**
+
+Because StockService must:
+
+- get stock data
+
+- check local storage
+
+- call the external API if needed
+
+So it needs to talk to both the repository and the external API.
+
+------------------------------------------------------------------------------------------------------------------
+
+**Components That Use Interfaces** 
+
+Some components don’t provide the functionality — they just use it.
+
+**Example**:
+
+StockController
+
+**Uses**:
+
+- IStockService
+
+- IComparisonService
+
+But it does not implement them.
+
+**Why?**
+
+**This keeps the controller loosely coupled, meaning**:
+
+- it doesn’t depend on specific implementations
+
+- you can swap out services without changing the controller
+
+------------------------------------------------------------------------------------------------------------------
+
+# Advantages
+
+**Modularity**
+
+Each part of the system has a clear job.
+If something breaks, you know exactly where to look.
+
+**Maintainability**
+
+You can update or replace one component without affecting the whole system.
+
+**Example**:
+
+Switching from Yahoo Finance to another API requires changing only one component.
+
+**Scalability**
+
+The system can grow easily.
+You can add new features or swap technologies without redesigning everything.
+
+**Testability**
+
+Because everything uses interfaces, you can create “fake” versions of components for testing.
+
+This makes unit testing easier, faster and more reliable
