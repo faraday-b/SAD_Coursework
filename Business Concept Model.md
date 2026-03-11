@@ -4,7 +4,7 @@
 
 The following diagram represents the **Business Concept Model** derived from the project requirements. It illustrates the relationships between the core entities involved in the stock comparison system.
 
-![Improved_Business_Concept_Model](https://github.com/user-attachments/assets/a5fb3819-515a-439d-823c-9561d46ce690)
+![Improved_Business_Concept_Model](https://github.com/user-attachments/assets/8bb44b04-b03a-446b-b384-fb5eb0b11f6b)
 
 ## Key Model Logic
 
