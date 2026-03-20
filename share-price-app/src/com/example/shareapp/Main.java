@@ -12,7 +12,6 @@ import com.example.shareapp.infrastructure.datasource.ExternalAPIConnector;
 import com.example.shareapp.infrastructure.logging.LoggingService;
 import com.example.shareapp.infrastructure.repository.PersistenceManager;
 import com.example.shareapp.infrastructure.repository.SQLitePriceRepository;
-
 import java.time.LocalDate;
 
 /**
@@ -21,28 +20,28 @@ import java.time.LocalDate;
  */
 public class Main {
     public static void main(String[] args) {
-        // 1. Initialize Infrastructure & Configuration [cite: 68, 71]
+        // 1. Initialize Infrastructure & Configuration 
         ConfigurationManager config = new ConfigurationManager();
         LoggingService logger = new LoggingService();
         PersistenceManager persistenceManager = new PersistenceManager();
         persistenceManager.initializeStorage(); // Setup SQLite/JSON
 
-        // 2. Initialize Data Access Layers [cite: 18, 20]
+        // 2. Initialize Data Access Layers 
         SQLitePriceRepository repository = new SQLitePriceRepository();
         ExternalAPIConnector apiConnector = new ExternalAPIConnector();
         // Note: apiConnector implements both IPriceDataSource and IAccess
 
-        // 3. Initialize UI & Styles [cite: 24, 92]
+        // 3. Initialize UI & Styles 
         GraphingUI ui = new GraphingUI();
         StyleManager styleManager = new StyleManager();
-        styleManager.applyTheme(); // Apply basic styles as required [cite: 18]
+        styleManager.applyTheme(); // Apply basic styles as required 
 
         // 4. Initialize Domain Services (Business Logic) [cite: 60, 69]
-        ShareValidator validator = new ShareValidator(); // Enforces 2-year range [cite: 20]
+        ShareValidator validator = new ShareValidator(); // Enforces 2-year range 
         ComparisonEngine comparisonEngine = new ComparisonEngine();
         AnalyticsService analyticsService = new AnalyticsService();
 
-        // 5. Wire the Share Service Implementation [cite: 72, 82]
+        // 5. Wire the Share Service Implementation 
         // This component implements IShareService and uses ILogging, IPriceRepository, etc.
         ShareServiceImpl shareService = new ShareServiceImpl(
                 apiConnector,
@@ -57,7 +56,7 @@ public class Main {
         // 7. Demonstration of a System Request [cite: 19, 67]
         System.out.println("--- System Initialized (Sprint 2 Architecture) ---");
 
-        // Example: Compare Apple (AAPL) and Microsoft (MSFT) for the last year [cite: 24]
+        // Example: Compare Apple (AAPL) and Microsoft (MSFT) for the last year 
         LocalDate endDate = LocalDate.now();
         LocalDate startDate = endDate.minusYears(1);
 
