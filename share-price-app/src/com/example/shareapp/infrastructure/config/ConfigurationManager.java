@@ -9,7 +9,7 @@ public class ConfigurationManager implements IConfig {
 
     @Override
     public String getDatabasePath() {
-        // Requirement: SQLite database path [cite: 22]
+        // Requirement: SQLite database path 
         return "jdbc:sqlite:share_data.db";
     }
 }
