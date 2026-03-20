@@ -1,4 +1,4 @@
-# Sprint 2: Business Interface Specification
+# Business Interface Specification
 
 ## 1. Introduction
 
