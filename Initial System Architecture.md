@@ -15,8 +15,16 @@ The Share Price Comparison Web Application is designed using a clear, layered st
 
 <img width="747" height="597" alt="image" src="https://github.com/user-attachments/assets/64ee4a5b-ed46-4489-a9e2-ba28eee639a4" />
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+![ISASPT3](https://github.com/user-attachments/assets/2acce5f2-a685-42af-9439-8a5b964d3548)
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 The diagram is to provide a high-level overview of the system structure, identifying the main components, their interfaces, and how they interact. The architecture focuses on clarity, avoiding low-level implementation details.
