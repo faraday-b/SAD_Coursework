@@ -55,25 +55,7 @@ public class Main {
 
         // 7. Demonstration of a System Request [cite: 19, 67]
         System.out.println("--- System Initialized (Sprint 2 Architecture) ---");
-java.util.Scanner scanner = new java.util.Scanner(System.in);
+      controller.handleComparisonRequest("AAPL", "MSFT", startDate, endDate);
 
-System.out.print("Enter first stock symbol: ");
-String stock1 = scanner.nextLine();
-
-System.out.print("Enter second stock symbol: ");
-String stock2 = scanner.nextLine();
-
-System.out.print("Enter number of years (max 2): ");
-int years = scanner.nextInt();
-
-if (years > 2) {
-    System.out.println("Max 2 years allowed");
-    return;
-}
-
-LocalDate endDate = LocalDate.now();
-LocalDate startDate = endDate.minusYears(years);
-
-controller.handleComparisonRequest(stock1, stock2, startDate, endDate);
     }
 }
