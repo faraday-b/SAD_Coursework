@@ -1,10 +1,10 @@
 package com.example.shareapp.domain.service;
 
+import com.example.shareapp.domain.model.ComparisonResult;
 import com.example.shareapp.domain.model.SharePrice;
 import java.util.List;
-import java.util.Map;
 
 public interface IComparison {
-    // Calculates the percentage growth or difference between two sets of prices
-    Map<String, Double> calculateGrowth(Map<String, List<SharePrice>> data);
+    // Ensure this matches the method name in your implementation
+    ComparisonResult compare(List<SharePrice> listA, List<SharePrice> listB);
 }
