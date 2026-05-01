@@ -53,6 +53,9 @@ public class Main {
         // 6. Initialize the Controller
         ShareController controller = new ShareController(shareService);
 
+        LocalDate startDate = LocalDate.now().minusMonths(1);
+        LocalDate endDate = LocalDate.now();
+
         // 7. Demonstration of a System Request [cite: 19, 67]
         System.out.println("--- System Initialized (Sprint 2 Architecture) ---");
       controller.handleComparisonRequest("AAPL", "MSFT", startDate, endDate);
