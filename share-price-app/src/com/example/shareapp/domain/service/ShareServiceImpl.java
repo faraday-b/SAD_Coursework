@@ -1,56 +1,54 @@
 package com.example.shareapp.domain.service;
 
-import com.example.shareapp.client.ui.IVisualise;
+import com.example.shareapp.domain.model.ComparisonResult;
 import com.example.shareapp.domain.model.SharePrice;
 import com.example.shareapp.domain.validation.IValidator;
-import com.example.shareapp.infrastructure.datasource.IPriceDataSource;
 import com.example.shareapp.infrastructure.repository.IPriceRepository;
-
+import com.example.shareapp.client.ui.IVisualise;
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ShareServiceImpl implements IShareService {
-    private final IPriceDataSource dataSource;
     private final IPriceRepository repository;
     private final IValidator validator;
+    private final IAnalytics analytics;
+    private final IComparison comparisonEngine;
     private final IVisualise ui;
 
-    public ShareServiceImpl(IPriceDataSource ds, IPriceRepository repo, IValidator val, IVisualise ui) {
-        this.dataSource = ds;
+    public ShareServiceImpl(IPriceRepository repo, IValidator val, IAnalytics anal, IComparison comp, IVisualise ui) {
         this.repository = repo;
         this.validator = val;
+        this.analytics = anal;
+        this.comparisonEngine = comp;
         this.ui = ui;
     }
 
     @Override
-    public void compareShares(String s1, String s2, LocalDate start, LocalDate end) {
-        // 1. Validate date range (Max 2 years)
+    public ServiceResponse<ComparisonResult> compareShares(String s1, String s2, LocalDate start, LocalDate end) {
+        // FILTER 1: Validation (Business Rule: 2-year max)
         if (!validator.isValidRange(start, end)) {
-            ui.displayError("Invalid date range. Maximum range is 2 years.");
-            return;
+            return ServiceResponse.error("Invalid date range: Maximum 2 years allowed.");
         }
 
-        Map<String, List<SharePrice>> results = new HashMap<>();
+        // FILTER 2: Data Fetching (Persistence/Offline Support)
+        List<SharePrice> dataA = repository.getPrices(s1, start, end);
+        List<SharePrice> dataB = repository.getPrices(s2, start, end);
 
-        // 2. Business logic: Fetch data for both symbols [cite: 24]
-        results.put(s1, fetchData(s1, start, end));
-        results.put(s2, fetchData(s2, start, end));
-
-        // 3. Return results to UI via interface
-        ui.displayComparison(results);
-    }
-
-    private List<SharePrice> fetchData(String symbol, LocalDate start, LocalDate end) {
-        // Attempt to get from persistent storage first for offline functionality
-        List<SharePrice> cached = repository.getPrices(symbol, start, end);
-        if (cached != null && !cached.isEmpty()) {
-            return cached;
+        if (dataA.isEmpty() || dataB.isEmpty()) {
+            return ServiceResponse.error("No data found for one or both symbols.");
         }
-        // Otherwise, fetch from external API
-        List<SharePrice> remote = dataSource.fetchPrices(symbol, start, end);
-        repository.savePrices(symbol, remote); // Store for persistence
-        return remote;
+
+        // FILTER 3: Analytics (Technical Analysis)
+        double avgA = analytics.calculate(dataA, AnalysisType.AVERAGE_PRICE);
+        double volA = analytics.calculate(dataA, AnalysisType.VOLATILITY);
+
+        // FILTER 4: Comparison (Generating Compound Result)
+        ComparisonResult result = comparisonEngine.compare(dataA, dataB);
+
+        // UI NOTIFICATION: Visualizing components
+        ui.displayComparison(result.getComparisonText());
+
+        // SOA WRAPPER: Final Interoperable Result
+        return ServiceResponse.ok(result);
     }
 }

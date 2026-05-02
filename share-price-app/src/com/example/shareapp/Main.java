@@ -3,8 +3,8 @@ package com.example.shareapp;
 import com.example.shareapp.client.controller.ShareController;
 import com.example.shareapp.client.ui.GraphingUI;
 import com.example.shareapp.client.ui.StyleManager;
-import com.example.shareapp.domain.service.AnalyticsService;
-import com.example.shareapp.domain.service.ComparisonEngine;
+import com.example.shareapp.domain.service.AnalyticsServiceImpl;
+import com.example.shareapp.domain.service.ComparisonEngineImpl;
 import com.example.shareapp.domain.service.ShareServiceImpl;
 import com.example.shareapp.domain.validation.ShareValidator;
 import com.example.shareapp.infrastructure.config.ConfigurationManager;
@@ -12,7 +12,6 @@ import com.example.shareapp.infrastructure.datasource.ExternalAPIConnector;
 import com.example.shareapp.infrastructure.logging.LoggingService;
 import com.example.shareapp.infrastructure.repository.PersistenceManager;
 import com.example.shareapp.infrastructure.repository.SQLitePriceRepository;
-import java.time.LocalDate;
 
 /**
  * Main Application class that initializes the system architecture.
@@ -38,8 +37,8 @@ public class Main {
 
         // 4. Initialize Domain Services (Business Logic) [cite: 60, 69]
         ShareValidator validator = new ShareValidator(); // Enforces 2-year range 
-        ComparisonEngine comparisonEngine = new ComparisonEngine();
-        AnalyticsService analyticsService = new AnalyticsService();
+        ComparisonEngineImpl comparisonEngineImpl = new ComparisonEngineImpl();
+        AnalyticsServiceImpl analyticsServiceImpl = new AnalyticsServiceImpl();
 
         // 5. Wire the Share Service Implementation 
         // This component implements IShareService and uses ILogging, IPriceRepository, etc.

@@ -2,18 +2,19 @@ package com.example.shareapp.domain.model;
 
 import java.time.LocalDate;
 
-/**
- * Represents daily price information as required by the spec.
- */
 public class SharePrice {
-    private final LocalDate date;
-    private final double closePrice;
+    private String symbol;
+    private double price;
+    private LocalDate date;
 
-    public SharePrice(LocalDate date, double closePrice) {
+    public SharePrice(String symbol, double price, LocalDate date) {
+        this.symbol = symbol;
+        this.price = price;
         this.date = date;
-        this.closePrice = closePrice;
     }
 
+    // Ensure these getters exist!
+    public String getSymbol() { return symbol; }
+    public double getPrice() { return price; }
     public LocalDate getDate() { return date; }
-    public double getClosePrice() { return closePrice; }
 }
