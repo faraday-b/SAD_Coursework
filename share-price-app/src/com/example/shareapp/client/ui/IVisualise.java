@@ -1,10 +1,8 @@
 package com.example.shareapp.client.ui;
-
+// This defines the contract for rendering data to the user.
 import com.example.shareapp.domain.model.SharePrice;
 import java.util.List;
-import java.util.Map;
 
 public interface IVisualise {
-    void displayComparison(Map<String, List<SharePrice>> data);
-    void displayError(String message);
+    void renderComparisonChart(String title, List<SharePrice> data);
 }
