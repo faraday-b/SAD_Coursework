@@ -14,8 +14,19 @@ public class ExternalAPIConnector implements IAccess, IPriceDataSource {
     }
 
     @Override
-    public List<SharePrice> fetchPrices(String symbol, LocalDate start, LocalDate end) {
-        System.out.println("[API] Accessing external financial data for: " + symbol);
-        return new ArrayList<>(); // Placeholder for Sprint 2
+public List<SharePrice> fetchPrices(String symbol, LocalDate start, LocalDate end) {
+    System.out.println("[API] Accessing external financial data for: " + symbol);
+
+    List<SharePrice> data = new ArrayList<>();
+
+    double basePrice = symbol.equalsIgnoreCase("AAPL") ? 150 : 200;
+
+    long days = java.time.temporal.ChronoUnit.DAYS.between(start, end);
+
+    for (int i = 0; i < days; i += 30) {
+        data.add(new SharePrice(start.plusDays(i), basePrice + (i * 0.5)));
     }
+
+    return data;
+}
 }
