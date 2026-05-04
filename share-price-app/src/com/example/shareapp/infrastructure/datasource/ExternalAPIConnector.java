@@ -64,9 +64,9 @@ public class ExternalAPIConnector implements IAccess, IPriceDataSource {
                     LocalDate date = LocalDate.parse(matcher.group(1));
                     double closePrice = Double.parseDouble(matcher.group(2));
 
-                    // Filter by requested dates
                     if (!date.isBefore(start) && !date.isAfter(end)) {
-                        results.add(new SharePrice(date, closePrice));
+                        // Pass the 'symbol' variable into the constructor
+                        results.add(new SharePrice(symbol, closePrice, date));
                     }
                 }
 

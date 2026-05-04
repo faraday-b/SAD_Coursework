@@ -1,63 +1,77 @@
 package com.example.shareapp;
 
+// Import the Controller
 import com.example.shareapp.client.controller.ShareController;
+// Import the UI
 import com.example.shareapp.client.ui.GraphingUI;
-import com.example.shareapp.client.ui.StyleManager;
-import com.example.shareapp.domain.service.AnalyticsServiceImpl;
-import com.example.shareapp.domain.service.ComparisonEngineImpl;
-import com.example.shareapp.domain.service.ShareServiceImpl;
+// Import the Services and Interfaces
+import com.example.shareapp.domain.service.*;
+// Import the Validator
 import com.example.shareapp.domain.validation.ShareValidator;
+// Import the Infrastructure components
 import com.example.shareapp.infrastructure.config.ConfigurationManager;
+import com.example.shareapp.infrastructure.datasource.DataProvider;
 import com.example.shareapp.infrastructure.datasource.ExternalAPIConnector;
-import com.example.shareapp.infrastructure.logging.LoggingService;
-import com.example.shareapp.infrastructure.repository.PersistenceManager;
 import com.example.shareapp.infrastructure.repository.SQLitePriceRepository;
 
-/**
- * Main Application class that initializes the system architecture.
- * It coordinates the 'Starts' and 'Use' relations defined in the Component Diagram.
- */
+import java.time.LocalDate;
+
 public class Main {
     public static void main(String[] args) {
-        // 1. Initialize Infrastructure & Configuration 
-        ConfigurationManager config = new ConfigurationManager();
-        LoggingService logger = new LoggingService();
-        PersistenceManager persistenceManager = new PersistenceManager();
-        persistenceManager.initializeStorage(); // Setup SQLite/JSON
+        System.out.println("===========================================");
+        System.out.println("   SHARE PRICE ANALYSIS SYSTEM - STARTING  ");
+        System.out.println("===========================================");
 
-        // 2. Initialize Data Access Layers 
-        SQLitePriceRepository repository = new SQLitePriceRepository();
-        ExternalAPIConnector apiConnector = new ExternalAPIConnector();
-        // Note: apiConnector implements both IPriceDataSource and IAccess
+        try {
+            // 1. INFRASTRUCTURE SETUP
+            // ConfigurationManager provides the DB path and API keys
+            ConfigurationManager config = new ConfigurationManager();
 
-        // 3. Initialize UI & Styles 
-        GraphingUI ui = new GraphingUI();
-        StyleManager styleManager = new StyleManager();
-        styleManager.applyTheme(); // Apply basic styles as required 
+            // SQLitePriceRepository handles local database storage
+            SQLitePriceRepository repository = new SQLitePriceRepository();
 
-        // 4. Initialize Domain Services (Business Logic) [cite: 60, 69]
-        ShareValidator validator = new ShareValidator(); // Enforces 2-year range 
-        ComparisonEngineImpl comparisonEngineImpl = new ComparisonEngineImpl();
-        AnalyticsServiceImpl analyticsServiceImpl = new AnalyticsServiceImpl();
+            // ExternalAPIConnector handles fetching from the web
+            ExternalAPIConnector apiConnector = new ExternalAPIConnector();
 
-        // 5. Wire the Share Service Implementation 
-        // This component implements IShareService and uses ILogging, IPriceRepository, etc.
-        ShareServiceImpl shareService = new ShareServiceImpl(
-                apiConnector,
-                repository,
-                validator,
-                ui
-        );
+            // DataProvider orchestrates the "Offline Functionality"
+            DataProvider dataProvider = new DataProvider(apiConnector, repository);
 
-        // 6. Initialize the Controller
-        ShareController controller = new ShareController(shareService);
+            // 2. DOMAIN LOGIC SETUP (Your individual contribution area)
+            ShareValidator validator = new ShareValidator();
+            AnalyticsServiceImpl analytics = new AnalyticsServiceImpl();
+            ComparisonEngineImpl comparison = new ComparisonEngineImpl();
 
-        LocalDate startDate = LocalDate.now().minusMonths(1);
-        LocalDate endDate = LocalDate.now();
+            // 3. UI SETUP
+            GraphingUI ui = new GraphingUI();
 
-        // 7. Demonstration of a System Request [cite: 19, 67]
-        System.out.println("--- System Initialized (Sprint 2 Architecture) ---");
-      controller.handleComparisonRequest("AAPL", "MSFT", startDate, endDate);
+            // 4. COMPOSITION ROOT (The "Wiring" of the components)
+            // Note: We use the repository here so the service can read/write data
+            ShareServiceImpl shareService = new ShareServiceImpl(
+                    repository,
+                    validator,
+                    analytics,
+                    comparison,
+                    ui
+            );
 
+            // 5. CONTROLLER SETUP
+            ShareController controller = new ShareController(shareService);
+
+            // 6. EXECUTION
+            // Let's compare Apple (AAPL) and Microsoft (MSFT) for the last 30 days
+            String stockA = "AAPL";
+            String stockB = "MSFT";
+            LocalDate endDate = LocalDate.now();
+            LocalDate startDate = endDate.minusDays(30);
+
+            System.out.println("[Main] Requesting comparison for " + stockA + " vs " + stockB);
+
+            // This triggers the full Pipe and Filter chain!
+            controller.handleComparisonRequest(stockA, stockB, startDate, endDate);
+
+        } catch (Exception e) {
+            System.err.println("[Critical Error] Application failed: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

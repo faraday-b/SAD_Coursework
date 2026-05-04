@@ -15,10 +15,10 @@ public class SQLitePriceRepository implements IPriceRepository {
         try (Connection conn = DriverManager.getConnection(DB_URL);
              Statement stmt = conn.createStatement()) {
             String sql = "CREATE TABLE IF NOT EXISTS prices (" +
-                         "symbol TEXT, " +
-                         "date TEXT, " +
-                         "closePrice REAL, " +
-                         "PRIMARY KEY (symbol, date))";
+                    "symbol TEXT, " +
+                    "date TEXT, " +
+                    "closePrice REAL, " +
+                    "PRIMARY KEY (symbol, date))";
             stmt.execute(sql);
         } catch (SQLException e) {
             System.err.println("[DB Error] Table creation failed: " + e.getMessage());
@@ -27,25 +27,21 @@ public class SQLitePriceRepository implements IPriceRepository {
 
     @Override
     public void savePrices(String symbol, List<SharePrice> prices) {
-        // Use 'INSERT OR REPLACE' so we don't get errors for duplicate dates
         String sql = "INSERT OR REPLACE INTO prices (symbol, date, closePrice) VALUES (?, ?, ?)";
-        
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            conn.setAutoCommit(false); // Batching for better performance
-            
-            for (SharePrice p : prices) {
-                pstmt.setString(1, symbol);
-                pstmt.setString(2, p.getDate().toString());
-                pstmt.setDouble(3, p.getClosePrice());
-                pstmt.addBatch();
+
+        try (Connection conn = DriverManager.getConnection(DB_URL)) {
+            conn.setAutoCommit(false);
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                for (SharePrice p : prices) {
+                    pstmt.setString(1, symbol);
+                    pstmt.setString(2, p.getDate().toString());
+                    // FIX: Changed from p.getClosePrice() to p.getPrice()
+                    pstmt.setDouble(3, p.getPrice());
+                    pstmt.addBatch();
+                }
+                pstmt.executeBatch();
+                conn.commit();
             }
-            
-            pstmt.executeBatch();
-            conn.commit();
-            System.out.println("[DB] Saved " + prices.size() + " records for " + symbol);
-            
         } catch (SQLException e) {
             System.err.println("[DB Error] Save failed: " + e.getMessage());
         }
@@ -54,26 +50,25 @@ public class SQLitePriceRepository implements IPriceRepository {
     @Override
     public List<SharePrice> getPrices(String symbol, LocalDate start, LocalDate end) {
         List<SharePrice> results = new ArrayList<>();
-        // Query only for the symbol and date range requested
         String sql = "SELECT date, closePrice FROM prices WHERE symbol = ? AND date BETWEEN ? AND ?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
+
             pstmt.setString(1, symbol);
             pstmt.setString(2, start.toString());
             pstmt.setString(3, end.toString());
-            
+
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 LocalDate date = LocalDate.parse(rs.getString("date"));
                 double price = rs.getDouble("closePrice");
-                results.add(new SharePrice(date, price));
+                // FIX: Added 'symbol' to the constructor call
+                results.add(new SharePrice(symbol, price, date));
             }
         } catch (SQLException e) {
             System.err.println("[DB Error] Retrieval failed: " + e.getMessage());
         }
-        
         return results;
     }
 }
