@@ -1,6 +1,5 @@
 package com.example.shareapp.client.ui;
 
-import com.example.shareapp.domain.model.ComparisonResult;
 import com.example.shareapp.domain.model.SharePrice;
 import java.util.List;
 
